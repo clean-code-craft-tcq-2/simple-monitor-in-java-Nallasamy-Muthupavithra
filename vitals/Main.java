@@ -23,7 +23,7 @@ public class Main {
       System.out.println("State of Charge is out of range!");
       return false;
     }
-    else if (!checkIfValueIsGreater(chargeRate, 0.8f)) {
+    else if (!checkIfValueIsLesser(chargeRate, 0.8f)) {
       System.out.println("Charge Rate is out of range!");
       return false;
     }
