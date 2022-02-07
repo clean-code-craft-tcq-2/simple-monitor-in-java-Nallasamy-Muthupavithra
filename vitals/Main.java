@@ -23,11 +23,25 @@ public class Main {
       System.out.println("State of Charge is out of range!");
       return false;
     }
-    else if (!checkIfValueIsLesser(chargeRate, 0.8f)) {
+    else if (!checkIfValueIsGreater(chargeRate, 0.8f)) {
       System.out.println("Charge Rate is out of range!");
       return false;
     }
     return true;
+  }
+
+  static void testIsValueLesser() {
+    assert (checkIfValueIsLesser(3, 5) == true);
+    assert (checkIfValueIsLesser(8, 5) == false);
+  }
+
+  /**
+   *
+   */
+  private static void testIsValueGreater() {
+    assert (checkIfValueIsGreater(8, 5) == true);
+    assert (checkIfValueIsGreater(3, 5) == false);
+
   }
 
   static void testIsInRange() {
@@ -37,6 +51,8 @@ public class Main {
   }
 
   public static void main(final String[] args) {
+    testIsValueGreater();
+    testIsValueLesser();
     testIsInRange();
     testBatteryIsOk();
   }
