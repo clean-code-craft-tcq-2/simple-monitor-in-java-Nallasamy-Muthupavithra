@@ -1,13 +1,13 @@
 package vitals;
 
-public class Main {  
-  
+public class Main {
+
   static boolean isInRange(final float value, final float lowerLimit, final float upperLimit) {
-   if (Float.isNaN(upperLimit)) {
-      return checkIfValueIsLesser(lowerLimit, value);
-    }
-    return Float.isNaN(lowerLimit) ? checkIfValueIsLesser(value, upperLimit)
-        : checkIfValueIsLesser(value, upperLimit) && checkIfValueIsLesser(lowerLimit, value);
+    return checkIfValueIsLesser(value, upperLimit) && checkIfValueIsGreater(value, lowerLimit);
+  }
+
+  static boolean checkIfValueIsGreater(final float value, final float lowerLimit) {
+    return Float.compare(lowerLimit, value) < 0;
   }
 
   private static boolean checkIfValueIsLesser(final float value, final float upperLimit) {
@@ -23,7 +23,7 @@ public class Main {
       System.out.println("State of Charge is out of range!");
       return false;
     }
-    else if (!isInRange(chargeRate, Float.NaN, 0.8f)) {
+    else if (!checkIfValueIsGreater(chargeRate, 0.8f)) {
       System.out.println("Charge Rate is out of range!");
       return false;
     }
@@ -34,10 +34,6 @@ public class Main {
     assert (isInRange(3, 1, 6) == true); // range 1-6
     assert (isInRange(1, 4, 6) == false); // range 4-6
     assert (isInRange(7, 4, 6) == false); // range 4-6
-    assert (isInRange(1, Float.NaN, 2) == true); // range <2
-    assert (isInRange(5, Float.NaN, 2) == false); // range <2
-    assert (isInRange(5, 1, Float.NaN) == true); // range >1
-    assert (isInRange(5, 13, Float.NaN) == false); // range >13
   }
 
   public static void main(final String[] args) {
