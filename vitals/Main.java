@@ -1,6 +1,7 @@
 package vitals;
 
-
+public class Main {
+  
   static boolean isInRange(final float value, final float lowerLimit, final float upperLimit) {
     if (Float.isNaN(upperLimit)) {
       return Float.compare(lowerLimit, value) < 0;
