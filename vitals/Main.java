@@ -1,14 +1,17 @@
 package vitals;
 
-public class Main {
+public class Main {  
   
   static boolean isInRange(final float value, final float lowerLimit, final float upperLimit) {
-    
-    if (Float.isNaN(upperLimit)) {
-      return Float.compare(lowerLimit, value) < 0;
+   if (Float.isNaN(upperLimit)) {
+      return checkIfValueIsLesser(lowerLimit, value);
     }
-    return Float.isNaN(lowerLimit) ? Float.compare(value, upperLimit) < 0
-        : (Float.compare(value, upperLimit) < 0) && (Float.compare(lowerLimit, value) < 0);
+    return Float.isNaN(lowerLimit) ? checkIfValueIsLesser(value, upperLimit)
+        : checkIfValueIsLesser(value, upperLimit) && checkIfValueIsLesser(lowerLimit, value);
+  }
+
+  private static boolean checkIfValueIsLesser(final float value, final float upperLimit) {
+    return Float.compare(value, upperLimit) < 0;
   }
 
   static boolean batteryIsOk(final float temperature, final float soc, final float chargeRate) {
