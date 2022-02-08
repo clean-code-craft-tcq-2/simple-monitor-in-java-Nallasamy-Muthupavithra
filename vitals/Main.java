@@ -1,6 +1,7 @@
+package vitals;
+
 public class Main {
-
-
+  
   static void testIsValueLesser() {
     assert (RangeChecker.checkIfValueIsLesser(3, 5) == true);
     assert (RangeChecker.checkIfValueIsLesser(8, 5) == false);
