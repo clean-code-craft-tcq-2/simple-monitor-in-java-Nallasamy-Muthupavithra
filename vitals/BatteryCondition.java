@@ -1,4 +1,4 @@
-Package vitals;
+package vitals;
 
 abstract class BatteryCondition {
 
