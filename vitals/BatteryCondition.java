@@ -1,3 +1,5 @@
+Package vitals;
+
 abstract class BatteryCondition {
 
   String condition;
