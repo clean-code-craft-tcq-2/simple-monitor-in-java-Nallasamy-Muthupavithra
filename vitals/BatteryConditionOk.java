@@ -1,3 +1,5 @@
+package vitals;
+
 public class BatteryConditionOk {
 
   static boolean checkIfBatteryConditionsOk(final BatteryCondition batteryCondition, final float temperature,
