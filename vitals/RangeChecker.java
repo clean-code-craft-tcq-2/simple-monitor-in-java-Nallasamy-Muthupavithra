@@ -1,3 +1,5 @@
+package vitals;
+
 public class RangeChecker {
 
   static boolean isInRange(final float value, final float lowerLimit, final float upperLimit) {
