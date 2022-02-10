@@ -51,8 +51,3 @@ public class BatteryConditionOk {
 
 }
 
-
-  
-  
-}
-
