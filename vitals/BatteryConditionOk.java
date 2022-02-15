@@ -2,33 +2,72 @@ package vitals;
 
 public class BatteryConditionOk {
 
-  static boolean checkIfBatteryConditionOk(final String batteryCondition, final float temperature,
-      final float lowerLimit, final float upperLimit) {
-    if (!RangeChecker.isInRange(temperature, lowerLimit, upperLimit)) {
+  static final float WARNING_TOLERANCE_PERCENT = (float) 0.05;
+
+  static float calculateWarningTolerance(final float upperLimit) {
+    return WARNING_TOLERANCE_PERCENT * upperLimit;
+  }
+
+  static void checkAndWarnEarly(final float batteryCondition, final float lowerLimit, final float upperLimit) {
+    float warningTolerance = calculateWarningTolerance(upperLimit);
+    if (highWarningLevelReached(batteryCondition, upperLimit, warningTolerance)) {
+      System.out.println("Warning: " + batteryCondition + "Approaching High");
+    }
+    if (lowWarningLevelReached(batteryCondition, lowerLimit, warningTolerance)) {
+      System.out.println("Warning: " + batteryCondition + "Approaching Low");
+    }
+  }
+
+  static void checkAndWarnEarly(final float batteryCondition, final float upperLimit) {
+    float warningTolerance = calculateWarningTolerance(upperLimit);
+    if (highWarningLevelReached(batteryCondition, upperLimit, warningTolerance)) {
+      System.out.println("Warning: " + batteryCondition + "Approaching High");
+    }
+  }
+
+  private static boolean highWarningLevelReached(final float batteryCondition, final float upperLimit,
+      final float warningTolerance) {
+    return batteryCondition >= (upperLimit - warningTolerance);
+  }
+
+  private static boolean lowWarningLevelReached(final float batteryCondition, final float lowerLimit,
+      final float warningTolerance) {
+    return batteryCondition <= (lowerLimit + warningTolerance);
+  }
+
+  static boolean checkIfBatteryConditionOk(final String batteryCondition, final float value, final float lowerLimit,
+      final float upperLimit, final boolean earlyWarningRequired) {
+    if (!RangeChecker.isInRange(value, lowerLimit, upperLimit)) {
       System.out.println(batteryCondition + " is out of range!");
       return false;
+    }
+    if (earlyWarningRequired) {
+      checkAndWarnEarly(value, lowerLimit, upperLimit);
     }
     return true;
   }
 
-  static boolean checkIfChargeRateOk(final String chargeRate, final float soc, final float upperLimit) {
+  static boolean checkIfChargeRateOk(final String chargeRate, final float soc, final float upperLimit,
+      final boolean earlyWarningRequired) {
     if (!RangeChecker.checkIfValueIsLesser(soc, upperLimit)) {
       System.out.println(chargeRate + " is out of range!");
       return false;
     }
+    if (earlyWarningRequired) {
+      checkAndWarnEarly(soc, upperLimit);
+    }
     return true;
   }
 
-
   static boolean batteryIsOk(final float temperature, final float soc, final float chargeRate) {
     Temperature tempObject = (final float value, final float lowerLimit,
-        final float upperLimit) -> checkIfBatteryConditionOk("Temperature", value, lowerLimit, upperLimit);
+        final float upperLimit) -> checkIfBatteryConditionOk("Temperature", value, lowerLimit, upperLimit, true);
 
     StateOfCharge stateOfChargeObject = (final float value, final float lowerLimit,
-        final float upperLimit) -> checkIfBatteryConditionOk("State Of Charge", value, lowerLimit, upperLimit);
+        final float upperLimit) -> checkIfBatteryConditionOk("State Of Charge", value, lowerLimit, upperLimit, true);
 
     ChargeRate chargeRateObject =
-        (final float value, final float upperLimit) -> checkIfChargeRateOk("Charge Rate", value, upperLimit);
+        (final float value, final float upperLimit) -> checkIfChargeRateOk("Charge Rate", value, upperLimit, true);
     return tempObject.conditionIsOk(temperature, 0, 45) && stateOfChargeObject.conditionIsOk(soc, 20, 80) &&
         chargeRateObject.conditionIsOk(chargeRate, 0.8f);
   }
@@ -50,4 +89,3 @@ public class BatteryConditionOk {
   }
 
 }
-
