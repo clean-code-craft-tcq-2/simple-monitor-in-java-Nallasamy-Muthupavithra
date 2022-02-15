@@ -25,12 +25,12 @@ public class BatteryConditionOk {
     }
   }
 
-  private static boolean highWarningLevelReached(final float batteryCondition, final float upperLimit,
+   static boolean highWarningLevelReached(final float batteryCondition, final float upperLimit,
       final float warningTolerance) {
     return batteryCondition >= (upperLimit - warningTolerance);
   }
 
-  private static boolean lowWarningLevelReached(final float batteryCondition, final float lowerLimit,
+   static boolean lowWarningLevelReached(final float batteryCondition, final float lowerLimit,
       final float warningTolerance) {
     return batteryCondition <= (lowerLimit + warningTolerance);
   }
