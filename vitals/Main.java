@@ -62,3 +62,5 @@ public class Main {
     testBatteryIsOk();
     System.out.println("All Tests passed!");
   }
+  
+}
