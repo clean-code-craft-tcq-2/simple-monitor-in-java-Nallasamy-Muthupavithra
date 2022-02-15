@@ -9,28 +9,28 @@ public class BatteryConditionOk {
   }
 
   static void checkAndWarnEarly(final float batteryCondition, final float lowerLimit, final float upperLimit) {
-    float warningTolerance = calculateWarningTolerance(upperLimit);
-    if (highWarningLevelReached(batteryCondition, upperLimit, warningTolerance)) {
-      System.out.println("Warning: " + batteryCondition + "Approaching High");
-    }
-    if (lowWarningLevelReached(batteryCondition, lowerLimit, warningTolerance)) {
-      System.out.println("Warning: " + batteryCondition + "Approaching Low");
+    checkAndWarnEarlyHigh(batteryCondition, upperLimit);
+    checkAndWarnEarlyLow(batteryCondition, lowerLimit, upperLimit);
+  }
+
+  static void checkAndWarnEarlyHigh(final float batteryCondition, final float upperLimit) {
+    if (highWarningLevelReached(batteryCondition, upperLimit, calculateWarningTolerance(upperLimit))) {
+      System.out.println("Warning: " + batteryCondition + "Approaching High!");
     }
   }
 
-  static void checkAndWarnEarly(final float batteryCondition, final float upperLimit) {
-    float warningTolerance = calculateWarningTolerance(upperLimit);
-    if (highWarningLevelReached(batteryCondition, upperLimit, warningTolerance)) {
-      System.out.println("Warning: " + batteryCondition + "Approaching High");
+  static void checkAndWarnEarlyLow(final float batteryCondition, final float lowerLimit, final float upperLimit) {
+    if (lowWarningLevelReached(batteryCondition, lowerLimit, calculateWarningTolerance(upperLimit))) {
+      System.out.println("Warning: " + batteryCondition + "Approaching Low!");
     }
   }
 
-   static boolean highWarningLevelReached(final float batteryCondition, final float upperLimit,
+  static boolean highWarningLevelReached(final float batteryCondition, final float upperLimit,
       final float warningTolerance) {
     return batteryCondition >= (upperLimit - warningTolerance);
   }
 
-   static boolean lowWarningLevelReached(final float batteryCondition, final float lowerLimit,
+  static boolean lowWarningLevelReached(final float batteryCondition, final float lowerLimit,
       final float warningTolerance) {
     return batteryCondition <= (lowerLimit + warningTolerance);
   }
@@ -54,7 +54,7 @@ public class BatteryConditionOk {
       return false;
     }
     if (earlyWarningRequired) {
-      checkAndWarnEarly(soc, upperLimit);
+      checkAndWarnEarlyHigh(soc, upperLimit);
     }
     return true;
   }
@@ -87,5 +87,7 @@ public class BatteryConditionOk {
 
     boolean conditionIsOk(final float temp, final float upperLimit);
   }
+
+}
 
 }
