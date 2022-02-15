@@ -30,8 +30,8 @@ public class Main {
   }
 
   static void testCalculateWarningTolerance() {
-    assert (BatteryConditionOk.calculateWarningTolerance(100f) == 0.05f);
-    assert (BatteryConditionOk.calculateWarningTolerance(80f) == 4f);
+    assert (BatteryConditionOk.calculateWarningTolerance(100f) == 5.0f);
+    assert (BatteryConditionOk.calculateWarningTolerance(80f) == 4.0f);
   }
 
   static void testcheckAndWarnEarly() {
