@@ -1,7 +1,7 @@
 package vitals;
 
 public class Main {
-  
+
   static void testIsValueLesser() {
     assert (RangeChecker.checkIfValueIsLesser(3, 5) == true);
     assert (RangeChecker.checkIfValueIsLesser(8, 5) == false);
@@ -19,6 +19,30 @@ public class Main {
     assert (RangeChecker.isInRange(7, 4, 6) == false); // range 4-6
   }
 
+  static void testHighWarningLevelReached() {
+    assert (BatteryConditionOk.highWarningLevelReached(76, 80, 4) == true);
+    assert (BatteryConditionOk.highWarningLevelReached(75, 80, 4) == false);
+  }
+
+  static void testLowWarningLevelReached() {
+    assert (BatteryConditionOk.lowWarningLevelReached(24, 20, 4) == true);
+    assert (BatteryConditionOk.lowWarningLevelReached(26, 20, 4) == false);
+  }
+
+  static void testCalculateWarningTolerance() {
+    assert (BatteryConditionOk.calculateWarningTolerance(100f) == 0.05f);
+    assert (BatteryConditionOk.calculateWarningTolerance(80f) == 4f);
+  }
+
+  static void testcheckAndWarnEarly() {
+    BatteryConditionOk.checkAndWarnEarly(24, 20, 80);
+    BatteryConditionOk.checkAndWarnEarly(76, 20, 80);
+    assert (BatteryConditionOk.batteryIsOk(24, 70, 0.7f) == true); // Exhibit early warning (low)
+    assert (BatteryConditionOk.batteryIsOk(76, 70, 0.7f) == true); // Exhibit early warning (high)
+    assert (BatteryConditionOk.batteryIsOk(26, 70, 0.7f) == true); // No early warning
+    assert (BatteryConditionOk.batteryIsOk(75, 70, 0.7f) == true); // No early warning
+  }
+
   static void testBatteryIsOk() {
     assert (BatteryConditionOk.batteryIsOk(25, 70, 0.7f) == true); // temperature,soc, chargeRate in range
     assert (BatteryConditionOk.batteryIsOk(50, 85, 0.9f) == false); // temperature,soc, chargeRate - out of range
@@ -33,7 +57,10 @@ public class Main {
     testIsValueGreater();
     testIsValueLesser();
     testIsInRange();
+    testCalculateWarningTolerance();
+    testLowWarningLevelReached();
+    testHighWarningLevelReached();
+    testcheckAndWarnEarly();
     testBatteryIsOk();
   }
 }
-
