@@ -35,12 +35,10 @@ public class Main {
   }
 
   static void testcheckAndWarnEarly() {
-    BatteryConditionOk.checkAndWarnEarly(24, 20, 80);
-    BatteryConditionOk.checkAndWarnEarly(76, 20, 80);
-    assert (BatteryConditionOk.batteryIsOk(24, 70, 0.7f) == true); // Exhibit early warning (low)
-    assert (BatteryConditionOk.batteryIsOk(76, 70, 0.7f) == true); // Exhibit early warning (high)
-    assert (BatteryConditionOk.batteryIsOk(26, 70, 0.7f) == true); // No early warning
-    assert (BatteryConditionOk.batteryIsOk(75, 70, 0.7f) == true); // No early warning
+    assert (BatteryConditionOk.batteryIsOk(25, 24, 0.7f) == true); // Exhibit early warning (low)
+    assert (BatteryConditionOk.batteryIsOk(25, 76, 0.7f) == true); // Exhibit early warning (high)
+    assert (BatteryConditionOk.batteryIsOk(25, 26, 0.7f) == true); // No early warning
+    assert (BatteryConditionOk.batteryIsOk(25, 75, 0.7f) == true); // No early warning
   }
 
   static void testBatteryIsOk() {
@@ -62,5 +60,5 @@ public class Main {
     testHighWarningLevelReached();
     testcheckAndWarnEarly();
     testBatteryIsOk();
+    System.out.println("All Tests passed!");
   }
-}
