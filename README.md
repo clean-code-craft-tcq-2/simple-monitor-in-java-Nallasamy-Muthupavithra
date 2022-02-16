@@ -1,3 +1,9 @@
+# Extension 2
+Accept input in different units for Temperature
+
+# Extension 1
+Displaying early warnings with a tolerance of 5% of the upper-limit.
+
 # Programming Paradigms
 
 Electric Vehicles have BMS - Battery Management Systems
