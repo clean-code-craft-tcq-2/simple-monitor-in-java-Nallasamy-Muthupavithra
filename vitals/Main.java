@@ -35,20 +35,31 @@ public class Main {
   }
 
   static void testcheckAndWarnEarly() {
-    assert (BatteryConditionOk.batteryIsOk(25, 24, 0.7f) == true); // Exhibit early warning (low)
-    assert (BatteryConditionOk.batteryIsOk(25, 76, 0.7f) == true); // Exhibit early warning (high)
-    assert (BatteryConditionOk.batteryIsOk(25, 26, 0.7f) == true); // No early warning
-    assert (BatteryConditionOk.batteryIsOk(25, 75, 0.7f) == true); // No early warning
+    assert (BatteryConditionOk.batteryIsOk("25 C", "24 %", "0.7 C") == true); // Exhibit early warning (low) -soc
+    assert (BatteryConditionOk.batteryIsOk("25 C", "76 %", "0.7 C") == true); // Exhibit early warning (high)-soc
+    assert (BatteryConditionOk.batteryIsOk("25 C", "26 %", "0.7 C") == true); // No early warning
+    assert (BatteryConditionOk.batteryIsOk("25 C", "75 %", "0.7 C") == true); // No early warning
   }
 
   static void testBatteryIsOk() {
-    assert (BatteryConditionOk.batteryIsOk(25, 70, 0.7f) == true); // temperature,soc, chargeRate in range
-    assert (BatteryConditionOk.batteryIsOk(50, 85, 0.9f) == false); // temperature,soc, chargeRate - out of range
-    assert (BatteryConditionOk.batteryIsOk(50, 70, 0.7f) == false); // temperature - out of range(high)
-    assert (BatteryConditionOk.batteryIsOk(-10, 75, 0.7f) == false); // temperature - out of range(low)
-    assert (BatteryConditionOk.batteryIsOk(40, 90, 0.7f) == false); // soc - out of range(high)
-    assert (BatteryConditionOk.batteryIsOk(40, 20, 0.7f) == false); // soc - out of range(low)
-    assert (BatteryConditionOk.batteryIsOk(40, 70, 1.0f) == false); // charge rate - out of range (high)
+    assert (BatteryConditionOk.batteryIsOk("25 C", "70 %", "0.7 C") == true); // temperature,soc, chargeRate in range
+    assert (BatteryConditionOk.batteryIsOk("50 C", "84 %", "0.9 C") == false); // temperature,soc, chargeRate - out of
+                                                                               // range
+    assert (BatteryConditionOk.batteryIsOk("50 C", "70 %", "0.7 C") == false); // temperature - out of range(high)
+    assert (BatteryConditionOk.batteryIsOk("-10 C", "75 %", "0.7 C") == false); // temperature - out of range(low)
+    assert (BatteryConditionOk.batteryIsOk("40 C", "90 %", "0.7 C") == false); // soc - out of range(high)
+    assert (BatteryConditionOk.batteryIsOk("40 C", "20 %", "0.7 C") == false); // soc - out of range(low)
+    assert (BatteryConditionOk.batteryIsOk("40 C", "70 %", "1.0 C") == false); // charge rate - out of range (high)
+  }
+
+  static void testTempInFarenheit() {
+    // range 32 F - 113 F
+    assert (BatteryConditionOk.batteryIsOk("100 F", "24 %", "0.7 C") == true);
+    assert (BatteryConditionOk.batteryIsOk("115 F", "24 %", "0.7 C") == false);
+    assert (BatteryConditionOk.batteryIsOk("110 F", "24 %", "0.7 C") == true); // early warning
+    assert (BatteryConditionOk.batteryIsOk("35 F", "24 %", "0.7 C") == true); // early warning
+    assert (BatteryConditionOk.batteryIsOk("31 F", "24 %", "0.7 C") == false);
+
   }
 
   public static void main(final String[] args) {
@@ -59,8 +70,8 @@ public class Main {
     testLowWarningLevelReached();
     testHighWarningLevelReached();
     testcheckAndWarnEarly();
+    testTempInFarenheit();
     testBatteryIsOk();
     System.out.println("All Tests passed!");
   }
-  
 }
