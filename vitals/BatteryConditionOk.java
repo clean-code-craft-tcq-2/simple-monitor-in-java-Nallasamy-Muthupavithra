@@ -8,19 +8,19 @@ public class BatteryConditionOk {
     return WARNING_TOLERANCE_PERCENT * upperLimit;
   }
 
-  static void checkAndWarnEarly(final float batteryCondition, final float lowerLimit, final float upperLimit) {
-    checkAndWarnEarlyHigh(batteryCondition, upperLimit);
-    checkAndWarnEarlyLow(batteryCondition, lowerLimit, upperLimit);
+  static void checkAndWarnEarly(final String batteryCondition,final float value, final float lowerLimit, final float upperLimit) {
+    checkAndWarnEarlyHigh(batteryCondition, value, upperLimit);
+    checkAndWarnEarlyLow(batteryCondition, value, lowerLimit, upperLimit);
   }
 
-  static void checkAndWarnEarlyHigh(final float batteryCondition, final float upperLimit) {
-    if (highWarningLevelReached(batteryCondition, upperLimit, calculateWarningTolerance(upperLimit))) {
+  static void checkAndWarnEarlyHigh(final String batteryCondition,final float value, final float upperLimit) {
+    if (highWarningLevelReached(value, upperLimit, calculateWarningTolerance(upperLimit))) {
       System.out.println("Warning: " + batteryCondition + "Approaching High!");
     }
   }
 
-  static void checkAndWarnEarlyLow(final float batteryCondition, final float lowerLimit, final float upperLimit) {
-    if (lowWarningLevelReached(batteryCondition, lowerLimit, calculateWarningTolerance(upperLimit))) {
+  static void checkAndWarnEarlyLow(final String batteryCondition,final float value, final float lowerLimit, final float upperLimit) {
+    if (lowWarningLevelReached(value, lowerLimit, calculateWarningTolerance(upperLimit))) {
       System.out.println("Warning: " + batteryCondition + "Approaching Low!");
     }
   }
@@ -42,7 +42,7 @@ public class BatteryConditionOk {
       return false;
     }
     if (earlyWarningRequired) {
-      checkAndWarnEarly(value, lowerLimit, upperLimit);
+      checkAndWarnEarly(batteryCondition,value, lowerLimit, upperLimit);
     }
     return true;
   }
@@ -54,7 +54,7 @@ public class BatteryConditionOk {
       return false;
     }
     if (earlyWarningRequired) {
-      checkAndWarnEarlyHigh(soc, upperLimit);
+      checkAndWarnEarlyHigh(chargeRate,soc, upperLimit);
     }
     return true;
   }
