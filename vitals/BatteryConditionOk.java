@@ -15,13 +15,13 @@ public class BatteryConditionOk {
 
   static void checkAndWarnEarlyHigh(final String batteryCondition,final float value, final float upperLimit) {
     if (highWarningLevelReached(value, upperLimit, calculateWarningTolerance(upperLimit))) {
-      System.out.println("Warning: " + batteryCondition + "Approaching High!");
+      System.out.println("Warning: " + batteryCondition + " Approaching High!");
     }
   }
 
   static void checkAndWarnEarlyLow(final String batteryCondition,final float value, final float lowerLimit, final float upperLimit) {
     if (lowWarningLevelReached(value, lowerLimit, calculateWarningTolerance(upperLimit))) {
-      System.out.println("Warning: " + batteryCondition + "Approaching Low!");
+      System.out.println("Warning: " + batteryCondition + " Approaching Low!");
     }
   }
 
